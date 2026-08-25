@@ -1,0 +1,5 @@
+torch>=2.0
+numpy
+requests          # data/shakespeare_char/prepare.py download
+tiktoken          # optional, only for BPE-tokenized datasets
+wandb             # optional, only if --wandb_log=1

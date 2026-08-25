@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# training artifacts
+out*/
+*.pt
+*.bin
+data/*/train.bin
+data/*/val.bin
+data/*/input.txt
+wandb/
+
+# environments
+.venv/
+venv/
+env/
+
+# editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+data/*/meta.pkl

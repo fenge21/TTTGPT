@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400">
+  <defs>
+    <style>
+      .title { font: bold 16px sans-serif; fill: #1a1a2e; }
+      .subtitle { font: 12px sans-serif; fill: #555; }
+      .label { font: 12px sans-serif; fill: #333; }
+      .formula { font: 12px 'Courier New', monospace; fill: #2d3436; }
+      .small { font: 10px sans-serif; fill: #636e72; }
+      .box-stroke { stroke: #2d3436; stroke-width: 1.5; }
+      .arrow { stroke: #636e72; stroke-width: 1.5; fill: none; marker-end: url(#arrowhead2); }
+      .highlight { stroke: #e17055; stroke-width: 2; }
+    </style>
+    <marker id="arrowhead2" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#636e72"/>
+    </marker>
+  </defs>
+
+  <text x="400" y="30" text-anchor="middle" class="title">TTT Layer: Inner Loop Learning</text>
+  <text x="400" y="48" text-anchor="middle" class="subtitle">Each token triggers a gradient update on the hidden state W</text>
+
+  <!-- Input token -->
+  <rect x="50" y="80" width="100" height="50" rx="6" fill="#74b9ff" class="box-stroke"/>
+  <text x="100" y="100" text-anchor="middle" class="label">Input xₜ</text>
+  <text x="100" y="118" text-anchor="middle" class="small">(key-value pair)</text>
+
+  <!-- Key and Value extraction -->
+  <rect x="200" y="70" width="80" height="35" rx="4" fill="#a29bfe" class="box-stroke"/>
+  <text x="240" y="92" text-anchor="middle" class="label">kₜ = W_k·xₜ</text>
+  
+  <rect x="200" y="115" width="80" height="35" rx="4" fill="#a29bfe" class="box-stroke"/>
+  <text x="240" y="137" text-anchor="middle" class="label">vₜ = W_v·xₜ</text>
+
+  <!-- Arrows from input -->
+  <path d="M150 100 L200 87" class="arrow"/>
+  <path d="M150 110 L200 132" class="arrow"/>
+
+  <!-- Current state W -->
+  <rect x="330" y="85" width="120" height="50" rx="6" fill="#fab1a0" class="box-stroke" stroke="#e17055" stroke-width="2"/>
+  <text x="390" y="105" text-anchor="middle" class="label">Current Wₜ₋₁</text>
+  <text x="390" y="122" text-anchor="middle" class="small">(trainable state)</text>
+
+  <!-- Forward pass: compute output -->
+  <rect x="500" y="70" width="120" height="35" rx="4" fill="#55efc4" class="box-stroke"/>
+  <text x="560" y="92" text-anchor="middle" class="formula">ŷ = f(kₜ; Wₜ₋₁)</text>
+
+  <!-- Loss computation -->
+  <rect x="500" y="115" width="120" height="35" rx="4" fill="#fdcb6e" class="box-stroke"/>
+  <text x="560" y="137" text-anchor="middle" class="formula">L = ||ŷ - vₜ||²</text>
+
+  <!-- Arrows -->
+  <path d="M280 87 L330 100" class="arrow"/>
+  <path d="M280 132 L330 120" class="arrow"/>
+  <path d="M450 105 L500 87" class="arrow"/>
+  <path d="M450 115 L500 132" class="arrow"/>
+
+  <!-- Gradient update -->
+  <rect x="660" y="85" width="120" height="50" rx="6" fill="#ff7675" class="box-stroke" stroke="#e17055" stroke-width="2"/>
+  <text x="720" y="105" text-anchor="middle" class="label">Update:</text>
+  <text x="720" y="122" text-anchor="middle" class="formula">Wₜ = Wₜ₋₁ - η∇L</text>
+
+  <!-- Arrow to update -->
+  <path d="M620 100 L660 105" class="arrow"/>
+  <path d="M620 140 L660 125" class="arrow"/>
+
+  <!-- Output -->
+  <rect x="500" y="200" width="120" height="40" rx="6" fill="#81ecec" class="box-stroke"/>
+  <text x="560" y="225" text-anchor="middle" class="label">Output yₜ</text>
+  <text x="560" y="255" text-anchor="middle" class="formula">yₜ = f(qₜ; Wₜ)</text>
+
+  <!-- Query -->
+  <rect x="330" y="200" width="120" height="40" rx="6" fill="#74b9ff" class="box-stroke"/>
+  <text x="390" y="225" text-anchor="middle" class="label">qₜ = W_q·xₜ</text>
+
+  <!-- Arrow from updated W to output -->
+  <path d="M720 135 L720 280 L450 280 L450 240" class="arrow"/>
+  <path d="M450 220 L500 220" class="arrow"/>
+
+  <!-- Next token arrow -->
+  <path d="M780 110 L820 110 L820 350 L390 350 L390 240" class="arrow" stroke="#e17055" stroke-dasharray="5,3"/>
+  <text x="600" y="370" text-anchor="middle" class="small" fill="#e17055">Wₜ carries to next token</text>
+
+  <!-- Legend box -->
+  <rect x="50" y="280" width="220" height="100" rx="6" fill="#f8f9fa" class="box-stroke"/>
+  <text x="70" y="300" class="label" font-weight="bold">Two-Pass Scheme:</text>
+  <text x="70" y="320" class="small">Pass 1: Snapshot output (before update)</text>
+  <text x="70" y="340" class="small">Pass 2: First-order correction for</text>
+  <text x="70" y="355" class="small">earlier tokens in chunk (causality)</text>
+  <text x="70" y="375" class="small">Prevents future-token leakage</text>
+</svg>

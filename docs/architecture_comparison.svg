@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 320">
+  <defs>
+    <style>
+      .title { font: bold 16px sans-serif; fill: #1a1a2e; }
+      .subtitle { font: 12px sans-serif; fill: #555; }
+      .label { font: 11px sans-serif; fill: #333; }
+      .formula { font: 11px 'Courier New', monospace; fill: #2d3436; }
+      .box-stroke { stroke: #2d3436; stroke-width: 1.5; }
+      .arrow { stroke: #636e72; stroke-width: 1.5; fill: none; marker-end: url(#arrowhead); }
+      .highlight { stroke: #e17055; stroke-width: 2; }
+    </style>
+    <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#636e72"/>
+    </marker>
+  </defs>
+
+  <!-- Transformer -->
+  <rect x="20" y="40" width="260" height="260" rx="8" fill="#dfe6e9" class="box-stroke"/>
+  <text x="150" y="65" text-anchor="middle" class="title">Transformer</text>
+  <text x="150" y="82" text-anchor="middle" class="subtitle">Attention: O(n²) FLOPs</text>
+  
+  <!-- Q, K, V -->
+  <rect x="50" y="100" width="60" height="30" rx="4" fill="#74b9ff" class="box-stroke"/>
+  <text x="80" y="120" text-anchor="middle" class="label">Q</text>
+  <rect x="130" y="100" width="60" height="30" rx="4" fill="#74b9ff" class="box-stroke"/>
+  <text x="160" y="120" text-anchor="middle" class="label">K</text>
+  <rect x="210" y="100" width="60" height="30" rx="4" fill="#74b9ff" class="box-stroke"/>
+  <text x="240" y="120" text-anchor="middle" class="label">V</text>
+  
+  <!-- Attention box -->
+  <rect x="80" y="150" width="140" height="50" rx="4" fill="#a29bfe" class="box-stroke"/>
+  <text x="150" y="175" text-anchor="middle" class="label">Softmax(QKᵀ/√d)</text>
+  <text x="150" y="190" text-anchor="middle" class="label">× V</text>
+  
+  <!-- Arrows -->
+  <path d="M80 130 L120 150" class="arrow"/>
+  <path d="M160 130 L150 150" class="arrow"/>
+  <path d="M240 130 L180 150" class="arrow"/>
+  
+  <!-- KV Cache grows -->
+  <rect x="50" y="220" width="200" height="60" rx="4" fill="#ffeaa7" class="box-stroke"/>
+  <text x="150" y="245" text-anchor="middle" class="label">KV Cache</text>
+  <text x="150" y="262" text-anchor="middle" class="formula">grows with n</text>
+  <text x="150" y="275" text-anchor="middle" class="formula">O(n) memory</text>
+
+  <!-- RNN -->
+  <rect x="320" y="40" width="260" height="260" rx="8" fill="#dfe6e9" class="box-stroke"/>
+  <text x="450" y="65" text-anchor="middle" class="title">RNN / Mamba</text>
+  <text x="450" y="82" text-anchor="middle" class="subtitle">Recurrence: O(n) FLOPs</text>
+  
+  <!-- Hidden state -->
+  <rect x="380" y="110" width="140" height="40" rx="4" fill="#55efc4" class="box-stroke"/>
+  <text x="450" y="135" text-anchor="middle" class="label">hₜ (fixed vector)</text>
+  
+  <!-- Recurrence arrow -->
+  <path d="M450 150 L450 180" class="arrow"/>
+  <path d="M450 180 L540 180 L540 130 L525 130" class="arrow"/>
+  <text x="510" y="170" class="label">loop</text>
+  
+  <!-- Update -->
+  <rect x="380" y="190" width="140" height="40" rx="4" fill="#81ecec" class="box-stroke"/>
+  <text x="450" y="215" text-anchor="middle" class="formula">hₜ = f(hₜ₋₁, xₜ)</text>
+  
+  <!-- State size -->
+  <rect x="360" y="245" width="180" height="40" rx="4" fill="#ffeaa7" class="box-stroke"/>
+  <text x="450" y="270" text-anchor="middle" class="label">Constant state, limited capacity</text>
+
+  <!-- TTT -->
+  <rect x="620" y="40" width="260" height="260" rx="8" fill="#ffeaa7" class="box-stroke" stroke="#e17055" stroke-width="2"/>
+  <text x="750" y="65" text-anchor="middle" class="title" fill="#e17055">TTT (Ours)</text>
+  <text x="750" y="82" text-anchor="middle" class="subtitle">Learn at test time: O(n) FLOPs</text>
+  
+  <!-- Weight matrix -->
+  <rect x="680" y="105" width="140" height="45" rx="4" fill="#fab1a0" class="box-stroke" stroke="#e17055" stroke-width="1.5"/>
+  <text x="750" y="125" text-anchor="middle" class="label">Wₜ (neural network)</text>
+  <text x="750" y="142" text-anchor="middle" class="formula">trainable state</text>
+  
+  <!-- Self-update -->
+  <rect x="680" y="165" width="140" height="55" rx="4" fill="#ff7675" class="box-stroke"/>
+  <text x="750" y="185" text-anchor="middle" class="label">Inner loop:</text>
+  <text x="750" y="200" text-anchor="middle" class="formula">Wₜ = Wₜ₋₁ - η∇L</text>
+  <text x="750" y="213" text-anchor="middle" class="formula">LEARN from xₜ</text>
+  
+  <!-- Arrow showing learning -->
+  <path d="M750 150 L750 165" class="arrow"/>
+  
+  <!-- State size -->
+  <rect x="660" y="245" width="180" height="40" rx="4" fill="#55efc4" class="box-stroke"/>
+  <text x="750" y="263" text-anchor="middle" class="label">Constant state</text>
+  <text x="750" y="278" text-anchor="middle" class="label">EXPRESSIVE capacity</text>
+</svg>

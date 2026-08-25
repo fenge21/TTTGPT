@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 280">
+  <defs>
+    <style>
+      .title { font: bold 16px sans-serif; fill: #1a1a2e; }
+      .subtitle { font: 12px sans-serif; fill: #555; }
+      .label { font: 12px sans-serif; fill: #333; }
+      .formula { font: 11px 'Courier New', monospace; fill: #2d3436; }
+      .small { font: 10px sans-serif; fill: #636e72; }
+      .box-stroke { stroke: #2d3436; stroke-width: 1.5; }
+      .arrow { stroke: #636e72; stroke-width: 1.5; fill: none; marker-end: url(#arrowhead3); }
+    </style>
+    <marker id="arrowhead3" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#636e72"/>
+    </marker>
+  </defs>
+
+  <text x="400" y="30" text-anchor="middle" class="title">State Size Comparison: KV Cache vs TTT State W</text>
+  <text x="400" y="48" text-anchor="middle" class="subtitle">Memory required to continue decoding at different context lengths</text>
+
+  <!-- Y axis -->
+  <line x1="80" y1="70" x2="80" y2="240" stroke="#2d3436" stroke-width="1.5"/>
+  <!-- X axis -->
+  <line x1="80" y1="240" x2="750" y2="240" stroke="#2d3436" stroke-width="1.5"/>
+
+  <!-- Y axis labels -->
+  <text x="70" y="240" text-anchor="end" class="small">0</text>
+  <text x="70" y="190" text-anchor="end" class="small">1 GB</text>
+  <text x="70" y="140" text-anchor="end" class="small">2 GB</text>
+  <text x="70" y="90" text-anchor="end" class="small">4 GB</text>
+
+  <!-- X axis labels -->
+  <text x="150" y="260" text-anchor="middle" class="label">1K tokens</text>
+  <text x="350" y="260" text-anchor="middle" class="label">16K tokens</text>
+  <text x="550" y="260" text-anchor="middle" class="label">64K tokens</text>
+  <text x="700" y="260" text-anchor="middle" class="label">1M tokens</text>
+
+  <!-- KV Cache bars (growing) -->
+  <rect x="120" y="220" width="60" height="20" rx="3" fill="#74b9ff" class="box-stroke"/>
+  <text x="150" y="235" text-anchor="middle" class="small" fill="white">4 MB</text>
+
+  <rect x="300" y="180" width="60" height="60" rx="3" fill="#0984e3" class="box-stroke"/>
+  <text x="330" y="215" text-anchor="middle" class="small" fill="white">64 MB</text>
+
+  <rect x="500" y="120" width="60" height="120" rx="3" fill="#0984e3" class="box-stroke"/>
+  <text x="530" y="185" text-anchor="middle" class="small" fill="white">256 MB</text>
+
+  <rect x="660" y="70" width="60" height="170" rx="3" fill="#d63031" class="box-stroke"/>
+  <text x="690" y="160" text-anchor="middle" class="small" fill="white">4 GB</text>
+
+  <!-- TTT State W (constant) -->
+  <rect x="190" y="235" width="60" height="5" rx="2" fill="#e17055" stroke="#e17055" stroke-width="2"/>
+  <rect x="370" y="235" width="60" height="5" rx="2" fill="#e17055" stroke="#e17055" stroke-width="2"/>
+  <rect x="570" y="235" width="60" height="5" rx="2" fill="#e17055" stroke="#e17055" stroke-width="2"/>
+  <rect x="730" y="235" width="60" height="5" rx="2" fill="#e17055" stroke="#e17055" stroke-width="2"/>
+
+  <!-- TTT label -->
+  <text x="400" y="225" text-anchor="middle" class="label" fill="#e17055" font-weight="bold">TTT State W: constant 64 KB</text>
+
+  <!-- Legend -->
+  <rect x="450" y="80" width="15" height="15" rx="2" fill="#0984e3" class="box-stroke"/>
+  <text x="475" y="92" class="label">KV Cache (Transformer)</text>
+  
+  <rect x="450" y="105" width="15" height="15" rx="2" fill="#e17055" stroke="#e17055" stroke-width="2"/>
+  <text x="475" y="117" class="label">TTT State W (constant)</text>
+
+  <!-- Ratio annotations -->
+  <text x="150" y="200" text-anchor="middle" class="small" fill="#636e72">64×</text>
+  <text x="330" y="165" text-anchor="middle" class="small" fill="#636e72">4096×</text>
+  <text x="530" y="105" text-anchor="middle" class="small" fill="#636e72">65536×</text>
+</svg>

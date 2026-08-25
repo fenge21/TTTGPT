@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="docs/logo.svg" alt="TTTGPT Logo" width="200"/>
+<img src="docs/logo.png" alt="TTTGPT Logo" width="200"/>
 
 # TTTGPT
 
@@ -31,7 +31,7 @@ with an honest accounting of what works, what doesn't, and why.
 
 <br />
 
-<img src="docs/architecture_comparison.svg?raw=1" alt="Architecture Comparison" width="900"/>
+<img src="docs/architecture_comparison.png" alt="Architecture Comparison" width="900"/>
 
 </div>
 
@@ -69,7 +69,7 @@ learns at inference time" is the mechanism, not a bolt-on.
 
 <br />
 
-<img src="docs/inner_loop.svg?raw=1" alt="TTT Inner Loop" width="800"/>
+<img src="docs/inner_loop.png" alt="TTT Inner Loop" width="800"/>
 
 ---
 
@@ -92,7 +92,7 @@ State needed to continue decoding:
 
 <br />
 
-<img src="docs/state_size_comparison.svg?raw=1" alt="State Size Comparison" width="800"/>
+<img src="docs/state_size_comparison.png" alt="State Size Comparison" width="800"/>
 
 ### 3. Long-context memory utilization — partially reproduced
 On a motif-recall benchmark (recurring random patterns at controlled distances),

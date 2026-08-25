@@ -1,89 +1,81 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400">
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="430" viewBox="0 0 880 430">
   <defs>
-    <style>
-      .title { font: bold 16px sans-serif; fill: #1a1a2e; }
-      .subtitle { font: 12px sans-serif; fill: #555; }
-      .label { font: 12px sans-serif; fill: #333; }
-      .formula { font: 12px 'Courier New', monospace; fill: #2d3436; }
-      .small { font: 10px sans-serif; fill: #636e72; }
-      .box-stroke { stroke: #2d3436; stroke-width: 1.5; }
-      .arrow { stroke: #636e72; stroke-width: 1.5; fill: none; marker-end: url(#arrowhead2); }
-      .highlight { stroke: #e17055; stroke-width: 2; }
-    </style>
-    <marker id="arrowhead2" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
-      <polygon points="0 0, 8 3, 0 6" fill="#636e72"/>
+    <marker id="ah2" markerWidth="9" markerHeight="7" refX="8.5" refY="3.5" orient="auto">
+      <polygon points="0 0, 9 3.5, 0 7" fill="#64748b"/>
+    </marker>
+    <marker id="ah2r" markerWidth="9" markerHeight="7" refX="8.5" refY="3.5" orient="auto">
+      <polygon points="0 0, 9 3.5, 0 7" fill="#e11d48"/>
     </marker>
   </defs>
 
-  <text x="400" y="30" text-anchor="middle" class="title">TTT Layer: Inner Loop Learning</text>
-  <text x="400" y="48" text-anchor="middle" class="subtitle">Each token triggers a gradient update on the hidden state W</text>
+  <rect x="0" y="0" width="880" height="430" fill="#ffffff"/>
 
-  <!-- Input token -->
-  <rect x="50" y="80" width="100" height="50" rx="6" fill="#74b9ff" class="box-stroke"/>
-  <text x="100" y="100" text-anchor="middle" class="label">Input xₜ</text>
-  <text x="100" y="118" text-anchor="middle" class="small">(key-value pair)</text>
+  <text x="440" y="32" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="18" font-weight="bold" fill="#0f172a">Inside a TTT layer: one token → one gradient step</text>
+  <text x="440" y="52" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="12.5" fill="#64748b">the recurrent state W is trained by its own inner optimizer at inference time</text>
 
-  <!-- Key and Value extraction -->
-  <rect x="200" y="70" width="80" height="35" rx="4" fill="#a29bfe" class="box-stroke"/>
-  <text x="240" y="92" text-anchor="middle" class="label">kₜ = W_k·xₜ</text>
-  
-  <rect x="200" y="115" width="80" height="35" rx="4" fill="#a29bfe" class="box-stroke"/>
-  <text x="240" y="137" text-anchor="middle" class="label">vₜ = W_v·xₜ</text>
+  <!-- input -->
+  <rect x="36" y="84" width="116" height="56" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="94" y="107" text-anchor="middle" font-family="Consolas, 'Courier New', monospace" font-size="13" fill="#1e3a8a">input x<tspan dy="3.5" font-size="9.5">t</tspan></text>
+  <text x="94" y="125" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" fill="#3b82f6">(key, value) pair</text>
 
-  <!-- Arrows from input -->
-  <path d="M150 100 L200 87" class="arrow"/>
-  <path d="M150 110 L200 132" class="arrow"/>
+  <!-- projections -->
+  <rect x="216" y="64" width="150" height="38" rx="8" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/>
+  <text x="291" y="88" text-anchor="middle" font-family="Consolas, 'Courier New', monospace" font-size="12.5" fill="#4c1d95">k<tspan dy="3.5" font-size="9.5">t</tspan><tspan dy="-3.5"> = W</tspan><tspan dy="3.5" font-size="9.5">K</tspan><tspan dy="-3.5">·x</tspan><tspan dy="3.5" font-size="9.5">t</tspan></text>
 
-  <!-- Current state W -->
-  <rect x="330" y="85" width="120" height="50" rx="6" fill="#fab1a0" class="box-stroke" stroke="#e17055" stroke-width="2"/>
-  <text x="390" y="105" text-anchor="middle" class="label">Current Wₜ₋₁</text>
-  <text x="390" y="122" text-anchor="middle" class="small">(trainable state)</text>
+  <rect x="216" y="122" width="150" height="38" rx="8" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/>
+  <text x="291" y="146" text-anchor="middle" font-family="Consolas, 'Courier New', monospace" font-size="12.5" fill="#4c1d95">v<tspan dy="3.5" font-size="9.5">t</tspan><tspan dy="-3.5"> = W</tspan><tspan dy="3.5" font-size="9.5">V</tspan><tspan dy="-3.5">·x</tspan><tspan dy="3.5" font-size="9.5">t</tspan></text>
 
-  <!-- Forward pass: compute output -->
-  <rect x="500" y="70" width="120" height="35" rx="4" fill="#55efc4" class="box-stroke"/>
-  <text x="560" y="92" text-anchor="middle" class="formula">ŷ = f(kₜ; Wₜ₋₁)</text>
+  <line x1="152" y1="102" x2="212" y2="85" stroke="#64748b" stroke-width="1.5" marker-end="url(#ah2)"/>
+  <line x1="152" y1="116" x2="212" y2="139" stroke="#64748b" stroke-width="1.5" marker-end="url(#ah2)"/>
 
-  <!-- Loss computation -->
-  <rect x="500" y="115" width="120" height="35" rx="4" fill="#fdcb6e" class="box-stroke"/>
-  <text x="560" y="137" text-anchor="middle" class="formula">L = ||ŷ - vₜ||²</text>
+  <!-- current state -->
+  <rect x="430" y="74" width="170" height="76" rx="10" fill="#ffe4e6" stroke="#e11d48" stroke-width="2"/>
+  <text x="515" y="99" text-anchor="middle" font-family="Consolas, 'Courier New', monospace" font-size="13" font-weight="bold" fill="#9f1239">current state W<tspan dy="3.5" font-size="10">t−1</tspan></text>
+  <text x="515" y="118" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" fill="#be123c">all tokens so far,</text>
+  <text x="515" y="134" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" fill="#be123c">compressed into weights</text>
 
-  <!-- Arrows -->
-  <path d="M280 87 L330 100" class="arrow"/>
-  <path d="M280 132 L330 120" class="arrow"/>
-  <path d="M450 105 L500 87" class="arrow"/>
-  <path d="M450 115 L500 132" class="arrow"/>
+  <line x1="366" y1="83" x2="426" y2="96" stroke="#64748b" stroke-width="1.5" marker-end="url(#ah2)"/>
+  <line x1="366" y1="141" x2="426" y2="128" stroke="#64748b" stroke-width="1.5" marker-end="url(#ah2)"/>
 
-  <!-- Gradient update -->
-  <rect x="660" y="85" width="120" height="50" rx="6" fill="#ff7675" class="box-stroke" stroke="#e17055" stroke-width="2"/>
-  <text x="720" y="105" text-anchor="middle" class="label">Update:</text>
-  <text x="720" y="122" text-anchor="middle" class="formula">Wₜ = Wₜ₋₁ - η∇L</text>
+  <!-- prediction + loss -->
+  <rect x="664" y="64" width="182" height="38" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+  <text x="755" y="88" text-anchor="middle" font-family="Consolas, 'Courier New', monospace" font-size="12.5" fill="#14532d">ŷ<tspan dy="3.5" font-size="9.5">t</tspan><tspan dy="-3.5"> = f(k</tspan><tspan dy="3.5" font-size="9.5">t</tspan><tspan dy="-3.5"> ; W</tspan><tspan dy="3.5" font-size="9.5">t−1</tspan><tspan dy="-3.5">)</tspan></text>
 
-  <!-- Arrow to update -->
-  <path d="M620 100 L660 105" class="arrow"/>
-  <path d="M620 140 L660 125" class="arrow"/>
+  <rect x="664" y="122" width="182" height="38" rx="8" fill="#fef9c3" stroke="#ca8a04" stroke-width="1.5"/>
+  <text x="755" y="146" text-anchor="middle" font-family="Consolas, 'Courier New', monospace" font-size="12.5" fill="#854d0e">L<tspan dy="3.5" font-size="9.5">t</tspan><tspan dy="-3.5"> = || ŷ</tspan><tspan dy="3.5" font-size="9.5">t</tspan><tspan dy="-3.5"> − v</tspan><tspan dy="3.5" font-size="9.5">t</tspan><tspan dy="-3.5"> ||²</tspan></text>
 
-  <!-- Output -->
-  <rect x="500" y="200" width="120" height="40" rx="6" fill="#81ecec" class="box-stroke"/>
-  <text x="560" y="225" text-anchor="middle" class="label">Output yₜ</text>
-  <text x="560" y="255" text-anchor="middle" class="formula">yₜ = f(qₜ; Wₜ)</text>
+  <line x1="600" y1="100" x2="660" y2="87" stroke="#64748b" stroke-width="1.5" marker-end="url(#ah2)"/>
+  <line x1="600" y1="124" x2="660" y2="137" stroke="#64748b" stroke-width="1.5" marker-end="url(#ah2)"/>
 
-  <!-- Query -->
-  <rect x="330" y="200" width="120" height="40" rx="6" fill="#74b9ff" class="box-stroke"/>
-  <text x="390" y="225" text-anchor="middle" class="label">qₜ = W_q·xₜ</text>
+  <!-- update -->
+  <rect x="664" y="188" width="182" height="54" rx="10" fill="#ffedd5" stroke="#ea580c" stroke-width="2"/>
+  <text x="755" y="208" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5" font-weight="bold" fill="#9a3412">gradient update</text>
+  <text x="755" y="229" text-anchor="middle" font-family="Consolas, 'Courier New', monospace" font-size="13" fill="#7c2d12">W<tspan dy="3.5" font-size="10">t</tspan><tspan dy="-3.5"> = W</tspan><tspan dy="3.5" font-size="10">t−1</tspan><tspan dy="-3.5"> − η∇L</tspan><tspan dy="3.5" font-size="10">t</tspan></text>
 
-  <!-- Arrow from updated W to output -->
-  <path d="M720 135 L720 280 L450 280 L450 240" class="arrow"/>
-  <path d="M450 220 L500 220" class="arrow"/>
+  <line x1="755" y1="160" x2="755" y2="184" stroke="#64748b" stroke-width="1.5" marker-end="url(#ah2)"/>
 
-  <!-- Next token arrow -->
-  <path d="M780 110 L820 110 L820 350 L390 350 L390 240" class="arrow" stroke="#e17055" stroke-dasharray="5,3"/>
-  <text x="600" y="370" text-anchor="middle" class="small" fill="#e17055">Wₜ carries to next token</text>
+  <!-- query + output -->
+  <rect x="430" y="262" width="170" height="44" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="515" y="289" text-anchor="middle" font-family="Consolas, 'Courier New', monospace" font-size="12.5" fill="#1e3a8a">q<tspan dy="3.5" font-size="9.5">t</tspan><tspan dy="-3.5"> = W</tspan><tspan dy="3.5" font-size="9.5">Q</tspan><tspan dy="-3.5">·x</tspan><tspan dy="3.5" font-size="9.5">t</tspan></text>
 
-  <!-- Legend box -->
-  <rect x="50" y="280" width="220" height="100" rx="6" fill="#f8f9fa" class="box-stroke"/>
-  <text x="70" y="300" class="label" font-weight="bold">Two-Pass Scheme:</text>
-  <text x="70" y="320" class="small">Pass 1: Snapshot output (before update)</text>
-  <text x="70" y="340" class="small">Pass 2: First-order correction for</text>
-  <text x="70" y="355" class="small">earlier tokens in chunk (causality)</text>
-  <text x="70" y="375" class="small">Prevents future-token leakage</text>
+  <rect x="664" y="262" width="182" height="56" rx="10" fill="#d1fae5" stroke="#059669" stroke-width="2"/>
+  <text x="755" y="283" text-anchor="middle" font-family="Consolas, 'Courier New', monospace" font-size="12.5" fill="#065f46">output y<tspan dy="3.5" font-size="9.5">t</tspan><tspan dy="-3.5"> = f(q</tspan><tspan dy="3.5" font-size="9.5">t</tspan><tspan dy="-3.5"> ; W</tspan><tspan dy="3.5" font-size="9.5">t</tspan><tspan dy="-3.5">)</tspan></text>
+  <text x="755" y="303" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10.5" fill="#047857">reads the freshly-updated W</text>
+
+  <line x1="755" y1="242" x2="755" y2="258" stroke="#64748b" stroke-width="1.5" marker-end="url(#ah2)"/>
+  <line x1="600" y1="284" x2="660" y2="284" stroke="#64748b" stroke-width="1.5" marker-end="url(#ah2)"/>
+
+  <!-- recurrence carry -->
+  <path d="M 664 220 C 560 240 468 214 508 156" fill="none" stroke="#e11d48" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#ah2r)"/>
+  <text x="560" y="252" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="11" fill="#e11d48">W carries to the next token</text>
+
+  <!-- two-pass legend -->
+  <rect x="36" y="210" width="330" height="180" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="56" y="238" font-family="'Segoe UI', Arial, sans-serif" font-size="12.5" font-weight="bold" fill="#0f172a">Two-pass chunked scan (causality-safe)</text>
+  <text x="56" y="264" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5" fill="#475569">pass 1 — snapshot outputs before update</text>
+  <text x="56" y="284" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5" fill="#475569">pass 2 — first-order correction within chunk</text>
+  <text x="56" y="304" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5" fill="#475569">→ fixes early-token peeking (leak-free)</text>
+  <text x="56" y="332" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5" fill="#475569">+ mean (not sum) chunk gradients</text>
+  <text x="56" y="352" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5" fill="#475569">+ clamped log-lr → no NaN blowup</text>
 </svg>

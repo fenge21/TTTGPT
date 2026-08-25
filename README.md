@@ -15,12 +15,14 @@
 
 <br />
 
-```
-Transformer :  y_t = Attention(q_t, K, V)              # look everything up
-RNN         :  h_t = tanh(W_h h_{t-1} + W_x x_t)        # squeeze into a vector
-TTT         :  W_t = W_{t-1} - η ∇_W ||f(k_t;W_{t-1}) - v_t||²
-               y_t = f(q_t; W_t)                        # LEARN from every token
-```
+$$
+\begin{aligned}
+\text{Transformer}:\;& y_t=\mathrm{Attention}(q_t,\,K,\,V) &&\text{// look everything up}\\
+\text{RNN}:\;& h_t=\tanh(W_h\,h_{t-1}+W_x\,x_t) &&\text{// squeeze into a vector}\\
+\text{TTT}:\;& W_t=W_{t-1}-\eta\,\nabla_W\,\|f(k_t;W_{t-1})-v_t\|^2\\
+& y_t=f(q_t;\,W_t) &&\text{// LEARN from every token}
+\end{aligned}
+$$
 
 Built to make [arXiv:2407.04620](https://arxiv.org/abs/2407.04620)
 (Sun et al., 2024 — the architecture behind
@@ -29,7 +31,7 @@ with an honest accounting of what works, what doesn't, and why.
 
 <br />
 
-<img src="docs/architecture_comparison.svg" alt="Architecture Comparison" width="900"/>
+<img src="docs/architecture_comparison.svg?raw=1" alt="Architecture Comparison" width="900"/>
 
 </div>
 
@@ -48,14 +50,14 @@ with an honest accounting of what works, what doesn't, and why.
 
 ---
 
-## Why This Matters
+## 📊 Why This Matters
 
 <div align="center">
 
 |  | Transformer | RNN / Mamba | **TTT** |
 |:---:|:---:|:---:|:---:|
-| **FLOPs per sequence** | O(n²) | O(n) | **O(n)** |
-| **Streaming state size** | grows with n (KV cache) | constant but tiny | **constant AND expressive** |
+| **FLOPs per sequence** | $O(n^2)$ | $O(n)$ | $\mathbf{O(n)}$ |
+| **Streaming state size** | grows with $n$ (KV cache) | constant but tiny | **constant AND expressive** |
 | **Uses longer context?** | yes | plateaus (~16k) | **yes, keeps improving** |
 
 </div>
@@ -67,17 +69,17 @@ learns at inference time" is the mechanism, not a bolt-on.
 
 <br />
 
-<img src="docs/inner_loop.svg" alt="TTT Inner Loop" width="800"/>
+<img src="docs/inner_loop.svg?raw=1" alt="TTT Inner Loop" width="800"/>
 
 ---
 
-## Verified Claims in this Repo
+## ✅ Verified Claims in this Repo
 
 Run `python experiments/verify_claims.py` yourself. Measured on one RTX 5060 Ti:
 
 ### 1. Linear time scaling — confirmed
-Fitted exponent of latency vs sequence length: TTT-Linear **p = 0.90 ≈ 1**
-(attention p → 2; Flash Attention constants hide it below ~8k).
+Fitted exponent of latency vs sequence length: TTT-Linear **$p = 0.90 \approx 1$**
+(attention $p \to 2$; Flash Attention constants hide it below ~8k).
 
 ### 2. Constant streaming state — confirmed
 State needed to continue decoding:
@@ -90,7 +92,7 @@ State needed to continue decoding:
 
 <br />
 
-<img src="docs/state_size_comparison.svg" alt="State Size Comparison" width="800"/>
+<img src="docs/state_size_comparison.svg?raw=1" alt="State Size Comparison" width="800"/>
 
 ### 3. Long-context memory utilization — partially reproduced
 On a motif-recall benchmark (recurring random patterns at controlled distances),
@@ -104,7 +106,7 @@ clearly requires their systems work, which is exactly what this repo documents.
 
 ---
 
-## Quick start
+## 🚀 Quick Start
 
 ```bash
 # Install dependencies
@@ -133,7 +135,7 @@ python experiments/verify_claims.py p3   # long-context memory vs LSTM baseline
 
 ---
 
-## Repository layout
+## 📁 Repository Layout
 
 ```
 ttt_layers.py        TTTLinear / TTTMLP layers (the core contribution)
@@ -150,7 +152,7 @@ RESULTS.md           full experimental log, numbers, failure modes
 
 ---
 
-## Implementation notes (the part most repos skip)
+## 🧠 Implementation Notes (the part most repos skip)
 
 The TTT inner loop is a *recurrent optimization*, and naive implementations
 break in interesting ways. Things we learned by breaking them:
@@ -167,11 +169,11 @@ break in interesting ways. Things we learned by breaking them:
 
 ---
 
-## Roadmap
+## 🗺 Roadmap
 
 - [ ] exact closed-form per-token dual form (official JAX equivalence)
 - [ ] fused Triton kernel for pass 1+2 (paper shows >Transformer speed at 8k+)
-- [ ] per-token learnable inner lr η(x) = base·sigmoid(θ_lr·x)
+- [ ] per-token learnable inner lr $\eta(x)=\text{base}\cdot\sigma(\theta_{\text{lr}}\cdot x)$
 - [ ] LN + residual inside the inner model f
 - [ ] O(1)/token cached decoding (carry W across generate() steps)
 - [ ] torch.compile support for the chunked scan
@@ -180,7 +182,7 @@ break in interesting ways. Things we learned by breaking them:
 
 ---
 
-## Citation
+## 📖 Citation
 
 ```bibtex
 @article{sun2024learning,
@@ -199,7 +201,7 @@ the paper authors or SSI.
 
 ---
 
-## License
+## 📄 License
 
 [MIT](LICENSE) — see [LICENSE](LICENSE).
 
